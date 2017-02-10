@@ -1,10 +1,12 @@
 import express from "express";
 import config from './config';
 import nunjucks from 'nunjucks';
-import querystring from 'querystring';
 // import router from './router';
-import index from './routes/index';
-import advert from './routes/advert';
+import indexRouter from './routes/index';
+import advertRouter from './routes/advert';
+
+import bodyparse from './middleware/bodyparse'
+import errLog from './middleware/error_log'
 
 
 const app = express();
@@ -14,22 +16,16 @@ app.use("/public",express.static(config.publicPath))
 
 nunjucks.configure(config.viewPath, {
   autoescape: true,
-  express: app
+  express: app,
+  noCache: true
 })
 
-app.use( (req,res,next) => {
-    let data = ''
-    req.on('data',chunk => {
-        data += chunk
-    })
-    req.on('end',() => {
-        req.body = querystring.parse(data)
-        next()
-    })
-})
+app.use(bodyparse)
 
-app.use(index);
-app.use(advert);
+app.use(indexRouter);
+app.use(advertRouter);
+
+app.use(errLog)
 
 
 app.listen(3000,function(){
