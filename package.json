@@ -17,6 +17,7 @@
     "express": "^4.14.1",
     "font-awesome": "^4.7.0",
     "jquery": "^3.1.1",
+    "mongoose": "^4.8.1",
     "nprogress": "^0.2.0",
     "nunjucks": "^3.0.0"
   },

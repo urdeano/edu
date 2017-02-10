@@ -2,7 +2,10 @@ import express from "express";
 import config from './config';
 import nunjucks from 'nunjucks';
 import querystring from 'querystring';
-import router from './router';
+// import router from './router';
+import index from './routes/index';
+import advert from './routes/advert';
+
 
 const app = express();
 
@@ -25,7 +28,8 @@ app.use( (req,res,next) => {
     })
 })
 
-app.use(router);
+app.use(index);
+app.use(advert);
 
 
 app.listen(3000,function(){
